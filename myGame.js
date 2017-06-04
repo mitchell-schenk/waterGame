@@ -1,6 +1,6 @@
 var myGamePiece, farmB, cityB, ecoB, nextB;
 var myObstacles = [];
-var myMoney, myWater, eventText, city, farm, eco;
+var myMoney, myWater, city, farm, eco;
 var gameState = 1;
 //popup vars
 var popupContainer, farmP, farmM, cityP, cityM, ecoP, ecoM, done;
@@ -36,7 +36,6 @@ function startGame() {
     ecoWater = new componentText("20px Arial", "black", 675, 325, "Eco", 0);
     totalWater = new componentText("20px Arial", "black", 400, 250, "Total water", 10);
 
-    eventText = new componentText("30px Arial", "black", 400, 400, "Event", 0);
     myGameArea.start();
 }
 
@@ -75,7 +74,7 @@ var myGameArea = {
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
-}
+};
 
 function componentButton(width, height, color, x, y, text1, text2, fontStyle) {
     this.text1 = text1;
@@ -93,7 +92,7 @@ function componentButton(width, height, color, x, y, text1, text2, fontStyle) {
         ctx.fillStyle = "black";
         ctx.fillText(this.text1, this.x+ this.width/2, this.y+this.height/3);
         ctx.fillText(this.text2, this.x+ this.width/2, this.y+(2*(this.height/3)));
-    }
+    };
     //reuse for clicked?
     this.clicked = function(x, y) {
         var myleft = this.x;
@@ -105,7 +104,7 @@ function componentButton(width, height, color, x, y, text1, text2, fontStyle) {
             clicked = true;
         }
         return clicked;
-    }
+    };
 }
 
 function componentText(fontStyle, color, x, y, title, starting) {
@@ -119,7 +118,7 @@ function componentText(fontStyle, color, x, y, title, starting) {
         ctx.fillStyle = "black";
         //ctx.fillText(this.text + ": " + this.number, this.x, this.y);
         ctx.fillText(this.text+ ": " + this.number, this.x, this.y);
-    }
+    };
 }
 
 function updateGameArea() {
@@ -136,7 +135,6 @@ function updateGameArea() {
     city.update();
     eco.update();
 
-    eventText.update()
 
     if(gameState == 1){
       popupContainer.update();
@@ -156,22 +154,15 @@ function updateGameArea() {
 function checkButtons(x, y){
   var clicked = false;
   if(farmB.clicked(x,y)){
-    eventText.text = "Farm";
-    farm.number--;
     clicked = true;
   }
   else if(cityB.clicked(x,y)){
-    eventText.text = "City";
-    city.number--;
     clicked = true;
   }
   else if(ecoB.clicked(x,y)){
-    eventText.text = "Eco";
-    eco.number--;
     clicked = true;
   }
   else if(nextB.clicked(x,y)){
-    eventText.text = "Next";
     //startNext turn
     calcValues(farmWater.number, cityWater.number, ecoWater.number);
     farmWater.number = 0;
@@ -231,7 +222,7 @@ function checkPopupButtons(x, y){
     clicked = true;
   }
   else if(done.clicked(x,y)){
-    if(totalWater.number != 0){
+    if(totalWater.number !== 0){
       alert("you must allocate all of the water");
     }
     else{
