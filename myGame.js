@@ -6,11 +6,13 @@ var gameState = 1;
 var popupContainer, farmP, farmM, cityP, cityM, ecoP, ecoM, done;
 var farmWater, cityWater, ecoWater, totalWater;
 
-var farmMoney = 1.5, cityMoney = 1, ecoMoney = .5;
+var farmMoney = 1.5, cityMoney = 1, ecoMoney = 0.5;
 var farmHappiness =  4, cityHappiness = 5, ecoHappiness = 7;
+var farmIMG;
 //average water per year = 30
 
 function startGame() {
+    farmIMG = document.getElementById("farm");
 
     farmB = new componentButton(150, 50, "grey", 100, 500, "Farm:", "Upgrade farm $1", "15px Arial");
     cityB = new componentButton(150, 50, "grey", 300, 500, "City:", "Upgrade city $1", "15px Arial");
@@ -92,10 +94,11 @@ var myGameArea = {
         }, false);
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         game();
-        },
+      },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
+
 };
 
 function componentButton(width, height, color, x, y, text1, text2, fontStyle) {
@@ -151,6 +154,7 @@ function updateGameArea() {
     nextB.update();
     myWater.update();
     myMoney.update();
+    myGameArea.context.drawImage(farmIMG, 100, 100);
     farm.update();
     city.update();
     eco.update();
@@ -161,6 +165,7 @@ function updateGameArea() {
     cityPH.update();
     ecoPM.update();
     ecoPH.update();
+
 
     if(gameState == 1){
       popupContainer.update();
