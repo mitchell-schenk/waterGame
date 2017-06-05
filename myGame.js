@@ -8,12 +8,12 @@ var farmWater, cityWater, ecoWater, totalWater;
 
 var farmMoney = 1.5, cityMoney = 1, ecoMoney = 0.5;
 var farmHappiness =  4, cityHappiness = 5, ecoHappiness = 7, farmHappinessMod = 0, cityHappinessMod = 0, ecoHappinessMod = 0;
-var farmIMG;
+var image;
 var farmUpgradeNum = 0, cityUpgradeNum = 0, ecoUpgradeNum = 0;
 //average water per year = 30
 
 function startGame() {
-    farmIMG = document.getElementById("farm");
+    image = document.getElementById("board");
 
     farmB = new componentButton(150, 50, "grey", 100, 500, "Farm:", "Upgrade farm: $10", "15px Arial");
     cityB = new componentButton(150, 50, "grey", 300, 500, "City:", "Upgrade city: $10", "15px Arial");
@@ -87,11 +87,11 @@ function upgradeFarm(){
   if(myMoney.number >= cost){
     myMoney.number = myMoney.number - cost;
     farmUpgradeNum++;
-    if((farmUpgradeNum-1)%2 == 0){
-      farmMoney += .1;
+    if((farmUpgradeNum-1)%2 === 0){
+      farmMoney += 0.1;
     }
     else{
-      farmHappinessMod += .1;
+      farmHappinessMod += 0.1;
     }
     farmB.text2 = "Upgrade farm : " + ((farmUpgradeNum*10) + 10);
     setFarmPredicted();
@@ -104,11 +104,11 @@ function upgradeCity(){
     myMoney.number = myMoney.number - cost;
     cityUpgradeNum++;
 
-    if((cityUpgradeNum-1)%2 == 0){
-      cityMoney += .1;
+    if((cityUpgradeNum-1)%2 === 0){
+      cityMoney += 0.1;
     }
     else{
-      cityHappinessMod += .1;
+      cityHappinessMod += 0.1;
     }
     cityB.text2 = "Upgrade city : " + ((cityUpgradeNum*10) + 10);
     setCityPredicted();
@@ -121,11 +121,11 @@ function upgradeEco(){
     myMoney.number = myMoney.number - cost;
     ecoUpgradeNum++;
 
-    if((ecoUpgradeNum-1)%2 == 0){
-      ecoMoney += .1;
+    if((ecoUpgradeNum-1)%2 === 0){
+      ecoMoney += 0.1;
     }
     else{
-      ecoHappinessMod += .1;
+      ecoHappinessMod += 0.1;
     }
     ecoB.text2 = "Upgrade eco : " + ((ecoUpgradeNum*10) + 10);
     setEcoPredicted();
@@ -206,6 +206,7 @@ function componentText(fontStyle, color, x, y, title, starting) {
 
 function updateGameArea() {
     myGameArea.clear();
+    myGameArea.context.drawImage(image, 0, 0);
     myMoney.number = Math.floor(myMoney.number);
     farmB.update();
     cityB.update();
@@ -213,7 +214,6 @@ function updateGameArea() {
     nextB.update();
     myWater.update();
     myMoney.update();
-    myGameArea.context.drawImage(farmIMG, 100, 100);
     farm.update();
     city.update();
     eco.update();
