@@ -16,7 +16,7 @@ var cityUpgrades = ["Create a Water Bureau", "Upgrade Infrastructure", "Increase
 var ecoUpgrades = ["Install Fish Ladder", "Regulate Pollution", "Open Hatchery", "Treat Wastewater", "Dam Spill for Fish", "Awareness Campaign", "NO MORE UPGRADES"];
 
 var severeDrought = false, drought = false;
-var averageWater = 20;
+var averageWater = 23;
 //average water per year = 30
 
 function startGame() {
@@ -70,7 +70,7 @@ function calcValues(farmW, cityW, ecoW){
     eco.number = ecoPH.number;
     myMoney.number += (farmW*farmMoney)+(cityW*cityMoney)+(ecoW*ecoMoney);
     round.number += 1;
-    var num = Math.floor((Math.random()*20)+averageWater);
+    var num = Math.floor((Math.random()*14)+averageWater);
     if(round.number > 3){
       if(round.number%10 == 0){
         alert("The climate is changing! Average yearly water has dropped 2!");
@@ -95,10 +95,10 @@ function upgradeFarm(){
       myMoney.number = myMoney.number - cost;
       farmUpgradeNum++;
       if((farmUpgradeNum-1)%2 === 0){
-        farmMoney += 0.1;
+        farmMoney += 0.5;
       }
       else{
-        farmHappinessMod += 0.1;
+        farmHappinessMod += 0.5;
       }
       if(farmUpgradeNum == 6){
         farmB.text2 = farmUpgrades[6];
@@ -122,10 +122,10 @@ function upgradeCity(){
       cityUpgradeNum++;
 
       if((cityUpgradeNum-1)%2 === 0){
-        cityMoney += 0.1;
+        cityMoney += 0.5;
       }
       else{
-        cityHappinessMod += 0.1;
+        cityHappinessMod += 0.5;
       }
       if(cityUpgradeNum == 6){
         cityB.text2 = cityUpgrades[6];
@@ -149,10 +149,10 @@ function upgradeEco(){
       ecoUpgradeNum++;
 
       if((ecoUpgradeNum-1)%2 === 0){
-        ecoMoney += 0.1;
+        ecoMoney += 0.5;
       }
       else{
-        ecoHappinessMod += 0.1;
+        ecoHappinessMod += 0.5;
       }
       if(ecoUpgradeNum == 6){
         ecoB.text2 = ecoUpgrades[6];
