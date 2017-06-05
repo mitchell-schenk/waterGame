@@ -7,16 +7,17 @@ var popupContainer, farmP, farmM, cityP, cityM, ecoP, ecoM, done;
 var farmWater, cityWater, ecoWater, totalWater;
 
 var farmMoney = 1.5, cityMoney = 1, ecoMoney = 0.5;
-var farmHappiness =  4, cityHappiness = 5, ecoHappiness = 7;
+var farmHappiness =  4, cityHappiness = 5, ecoHappiness = 7, farmHappinessMod = 0, cityHappinessMod = 0, ecoHappinessMod = 0;
 var farmIMG;
+var farmUpgradeNum = 0, cityUpgradeNum = 0, ecoUpgradeNum = 0;
 //average water per year = 30
 
 function startGame() {
     farmIMG = document.getElementById("farm");
 
-    farmB = new componentButton(150, 50, "grey", 100, 500, "Farm:", "Upgrade farm $1", "15px Arial");
-    cityB = new componentButton(150, 50, "grey", 300, 500, "City:", "Upgrade city $1", "15px Arial");
-    ecoB = new componentButton(150, 50, "grey", 500, 500, "Eco:", "Upgrade eco $1", "15px Arial");
+    farmB = new componentButton(150, 50, "grey", 100, 500, "Farm:", "Upgrade farm: $10", "15px Arial");
+    cityB = new componentButton(150, 50, "grey", 300, 500, "City:", "Upgrade city: $10", "15px Arial");
+    ecoB = new componentButton(150, 50, "grey", 500, 500, "Eco:", "Upgrade eco: $10", "15px Arial");
     allocate = new componentButton(100, 50, "grey", 700, 400, "", "reallocate", "20px Arial");
     nextB = new componentButton(100, 50, "grey", 700, 500, "", "Next", "25px Arial");
     myMoney = new componentText("30px Arial", "black", 100, 50, "Money", 0);
@@ -54,6 +55,8 @@ function game(){
 
 }
 
+
+
 function calcValues(farmW, cityW, ecoW){
     //alert(farmW+ " " + cityW + " " + "" + ecoW);
     if(farm.number - (11-farmW)*farmHappiness < 100)
@@ -71,7 +74,57 @@ function calcValues(farmW, cityW, ecoW){
     myMoney.number += (farmW*farmMoney)+(cityW*cityMoney)+(ecoW*ecoMoney);
     var num = Math.floor((Math.random()*20)+20);
     totalWater.number = num;
-    updateGameArea();
+    //updateGameArea();
+}
+
+function upgradeFarm(){
+  var cost = (farmUpgradeNum * 10) + 10;
+  if(myMoney.number >= cost){
+    myMoney.number = myMoney.number - cost;
+    farmUpgradeNum++;
+    if((farmUpgradeNum-1)%2 == 0){
+      farmMoney += .1;
+    }
+    else{
+      farmHappinessMod += .1;
+    }
+    farmB.text2 = "Upgrade farm : " + ((farmUpgradeNum*10) + 10);
+    setFarmPredicted();
+  }
+}
+
+function upgradeCity(){
+  var cost = (cityUpgradeNum * 10) + 10;
+  if(myMoney.number >= cost){
+    myMoney.number = myMoney.number - cost;
+    cityUpgradeNum++;
+
+    if((cityUpgradeNum-1)%2 == 0){
+      cityMoney += .1;
+    }
+    else{
+      cityHappinessMod += .1;
+    }
+    cityB.text2 = "Upgrade city : " + ((cityUpgradeNum*10) + 10);
+    setCityPredicted();
+  }
+}
+
+function upgradeEco(){
+  var cost = (ecoUpgradeNum * 10) + 10;
+  if(myMoney.number >= cost){
+    myMoney.number = myMoney.number - cost;
+    ecoUpgradeNum++;
+
+    if((ecoUpgradeNum-1)%2 == 0){
+      ecoMoney += .1;
+    }
+    else{
+      ecoHappinessMod += .1;
+    }
+    ecoB.text2 = "Upgrade eco : " + ((ecoUpgradeNum*10) + 10);
+    setEcoPredicted();
+  }
 }
 
 var myGameArea = {
@@ -148,6 +201,28 @@ function componentText(fontStyle, color, x, y, title, starting) {
 
 function updateGameArea() {
     myGameArea.clear();
+    myMoney.number = Math.floor(myMoney.number);
+    /*
+    if(gameState == 2){
+      if(myMoney.number > 100){
+        alert("100");
+        myMoney.number = (myMoney.number).toPrecision(4);
+      }
+      else if(myMoney.number > 10){
+        alert("10");
+        myMoney.number = (myMoney.number).toPrecision(3);
+        alert("10 after");
+      }
+      else if(myMoney.number > 1){
+          alert("1");
+          myMoney.number = (myMoney.number).toPrecision(2);
+      }
+      else{
+        myMoney.number = 0;
+      }
+      alert("done");
+    }
+    */
     farmB.update();
     cityB.update();
     ecoB.update();
@@ -185,12 +260,15 @@ function updateGameArea() {
 function checkButtons(x, y){
   var clicked = false;
   if(farmB.clicked(x,y)){
+    upgradeFarm();
     clicked = true;
   }
   else if(cityB.clicked(x,y)){
+    upgradeCity();
     clicked = true;
   }
   else if(ecoB.clicked(x,y)){
+    upgradeEco();
     clicked = true;
   }
   else if(allocate.clicked(x,y)){
@@ -262,24 +340,67 @@ function checkPopupButtons(x, y){
     else{
       gameState = 2;
       //setValues for calculation
-      if(farm.number - (11-farmWater.number)*farmHappiness < 100){
-        farmPH.number = farm.number - (11-farmWater.number)*farmHappiness;
-      }
-      else
-        farmPH.number = 100;
-      farmPM.number = farmWater.number * farmMoney;
-      if(city.number - (11-cityWater.number)*cityHappiness < 100)
-        cityPH.number = city.number - (11-cityWater.number)*cityHappiness;
-      else
-        cityPH.number = 100;
-      cityPM.number = cityWater.number * cityMoney;
-      if(eco.number - (11-ecoWater.number)*ecoHappiness < 100)
-        ecoPH.number = eco.number - (11-ecoWater.number)*ecoHappiness;
-      else
-        ecoPH.number = 100;
-      ecoPM.number = ecoWater.number * ecoMoney;
-      updateGameArea();
+      setFarmPredicted();
+      setCityPredicted();
+      setEcoPredicted();
+      //updateGameArea();
     }
+    clicked = true;
   }
   return clicked;
+}
+
+function setFarmPredicted(){
+  var delta = 11-farmWater.number;
+  if(delta > 0){
+    if(farm.number - delta*(farmHappiness + farmHappinessMod)< 100){
+      farmPH.number = (farm.number - delta*(farmHappiness + farmHappinessMod)).toPrecision(3);
+    }
+    else
+      farmPH.number = 100;
+  }
+  farmPH.number = (farm.number - delta*(farmHappiness - farmHappinessMod)).toPrecision(3);
+  farmPM.number = (farmWater.number * farmMoney).toPrecision(3);
+}
+
+function setFarmPredicted(){
+  var delta = 11-farmWater.number;
+  if(delta > 0){
+    if(farm.number - delta*(farmHappiness + farmHappinessMod)< 100){
+      farmPH.number = (farm.number - delta*(farmHappiness + farmHappinessMod)).toPrecision(3);
+    }
+    else
+      farmPH.number = 100;
+  }
+  else
+    farmPH.number = (farm.number - delta*(farmHappiness - farmHappinessMod)).toPrecision(3);
+  farmPM.number = (farmWater.number * farmMoney).toPrecision(3);
+}
+
+function setCityPredicted(){
+  var delta = 11-cityWater.number;
+  if(delta > 0){
+    if(city.number - delta*(cityHappiness + cityHappinessMod)< 100){
+      cityPH.number = (city.number - delta*(cityHappiness + cityHappinessMod)).toPrecision(3);
+    }
+    else
+      cityPH.number = 100;
+  }
+  else
+    cityPH.number = (city.number - delta*(cityHappiness - cityHappinessMod)).toPrecision(3);
+  cityPM.number = (cityWater.number * cityMoney).toPrecision(3);
+}
+
+function setEcoPredicted(){
+  var delta = 11-ecoWater.number;
+  if(delta > 0){
+    if(eco.number - delta*(ecoHappiness + ecoHappinessMod)< 100){
+      ecoPH.number = (eco.number - delta*(ecoHappiness + ecoHappinessMod)).toPrecision(3);
+    }
+    else
+      ecoPH.number = 100;
+  }
+  else
+    ecoPH.number = (eco.number - delta*(ecoHappiness - ecoHappinessMod)).toPrecision(3);
+  ecoPM.number = (ecoWater.number * ecoMoney).toPrecision(3);
 }
