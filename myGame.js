@@ -72,7 +72,7 @@ function calcValues(farmW, cityW, ecoW){
     round.number += 1;
     var num = Math.floor((Math.random()*14)+averageWater);
     if(round.number > 3){
-      if(round.number%10 == 0){
+      if(round.number%10 === 0){
         alert("The climate is changing! Average yearly water has dropped 2!");
         averageWater -= 2;
       }
@@ -98,7 +98,7 @@ function upgradeFarm(){
         farmMoney += 0.5;
       }
       else{
-        farmHappinessMod += (0.5)*(((farmUpgradeNum-1)/2)+1);;
+        farmHappinessMod += (0.5)*(((farmUpgradeNum-1)/2)+1);
       }
       if(farmUpgradeNum == 6){
         farmB.text2 = farmUpgrades[6];
@@ -125,7 +125,7 @@ function upgradeCity(){
         cityMoney += 0.5;
       }
       else{
-        cityHappinessMod += (0.5)*(((cityUpgradeNum-1)/2)+1);;
+        cityHappinessMod += (0.5)*(((cityUpgradeNum-1)/2)+1);
       }
       if(cityUpgradeNum == 6){
         cityB.text2 = cityUpgrades[6];
