@@ -202,27 +202,6 @@ function componentText(fontStyle, color, x, y, title, starting) {
 function updateGameArea() {
     myGameArea.clear();
     myMoney.number = Math.floor(myMoney.number);
-    /*
-    if(gameState == 2){
-      if(myMoney.number > 100){
-        alert("100");
-        myMoney.number = (myMoney.number).toPrecision(4);
-      }
-      else if(myMoney.number > 10){
-        alert("10");
-        myMoney.number = (myMoney.number).toPrecision(3);
-        alert("10 after");
-      }
-      else if(myMoney.number > 1){
-          alert("1");
-          myMoney.number = (myMoney.number).toPrecision(2);
-      }
-      else{
-        myMoney.number = 0;
-      }
-      alert("done");
-    }
-    */
     farmB.update();
     cityB.update();
     ecoB.update();
