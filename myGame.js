@@ -59,18 +59,23 @@ function game(){
 
 function calcValues(farmW, cityW, ecoW){
     //alert(farmW+ " " + cityW + " " + "" + ecoW);
+    /*
     if(farm.number - (11-farmW)*farmHappiness < 100)
       farm.number = farm.number - (11-farmW)*farmHappiness;
     else
       farm.number = 100;
     if(city.number - (11-cityW)*cityHappiness < 100)
-      city.number = city.number - (12-cityW)*cityHappiness;
+      city.number = city.number - (11-cityW)*cityHappiness;
     else
       city.number = 100;
     if(eco.number - (11-ecoW)*ecoHappiness < 100)
       eco.number = eco.number - (11-ecoW)*ecoHappiness;
     else
       farm.number = 100;
+      */
+    farm.number = farmPH.number;
+    city.number = cityPH.number;
+    eco.number = ecoPH.number;
     myMoney.number += (farmW*farmMoney)+(cityW*cityMoney)+(ecoW*ecoMoney);
     var num = Math.floor((Math.random()*20)+20);
     totalWater.number = num;
