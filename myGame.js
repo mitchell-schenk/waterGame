@@ -98,7 +98,7 @@ function upgradeFarm(){
         farmMoney += 0.5;
       }
       else{
-        farmHappinessMod += 0.5;
+        farmHappinessMod += (0.5)*(((farmUpgradeNum-1)/2)+1);;
       }
       if(farmUpgradeNum == 6){
         farmB.text2 = farmUpgrades[6];
@@ -125,7 +125,7 @@ function upgradeCity(){
         cityMoney += 0.5;
       }
       else{
-        cityHappinessMod += 0.5;
+        cityHappinessMod += (0.5)*(((cityUpgradeNum-1)/2)+1);;
       }
       if(cityUpgradeNum == 6){
         cityB.text2 = cityUpgrades[6];
@@ -152,7 +152,7 @@ function upgradeEco(){
         ecoMoney += 0.5;
       }
       else{
-        ecoHappinessMod += 0.5;
+        ecoHappinessMod += (0.5)*(((ecoUpgradeNum-1)/2)+1);
       }
       if(ecoUpgradeNum == 6){
         ecoB.text2 = ecoUpgrades[6];
