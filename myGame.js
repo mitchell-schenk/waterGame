@@ -75,13 +75,14 @@ function calcValues(farmW, cityW, ecoW){
       if(round.number%10 === 0){
         alert("The climate is changing! Average yearly water has dropped 2!");
         averageWater -= 2;
-      }
-      if((Math.floor(Math.random()*20) == 1) && (!severeDrought)){
+      }else if((Math.floor(Math.random()*20)) === 1 && (!severeDrought)){
         alert("Severe drought! Your water is 15 less than normal");
         num -= 15;
-      }else if((Math.floor(Math.random()*10) == 1) && (!drought)){
+        severeDrought = true;
+      }else if((Math.floor(Math.random()*10)) === 1 && (!drought)){
         alert("Drought! Your water is 10 less than normal");
         num -= 10;
+        drought = true;
       }
     }
     totalWater.number = num;
@@ -95,10 +96,10 @@ function upgradeFarm(){
       myMoney.number = myMoney.number - cost;
       farmUpgradeNum++;
       if((farmUpgradeNum-1)%2 === 0){
-        farmMoney += 0.5;
+        farmMoney += (0.5*(farmUpgradeNum/2));
       }
       else{
-        farmHappinessMod += (0.5)*(((farmUpgradeNum-1)/2)+1);
+        farmHappinessMod += (0.5)*(farmUpgradeNum/2);
       }
       if(farmUpgradeNum == 6){
         farmB.text2 = farmUpgrades[6];
@@ -122,10 +123,10 @@ function upgradeCity(){
       cityUpgradeNum++;
 
       if((cityUpgradeNum-1)%2 === 0){
-        cityMoney += 0.5;
+        cityMoney += (0.5*(cityUpgradeNum/2));
       }
       else{
-        cityHappinessMod += (0.5)*(((cityUpgradeNum-1)/2)+1);
+        cityHappinessMod += (0.5)*(cityUpgradeNum/2);
       }
       if(cityUpgradeNum == 6){
         cityB.text2 = cityUpgrades[6];
@@ -152,7 +153,7 @@ function upgradeEco(){
         ecoMoney += 0.5;
       }
       else{
-        ecoHappinessMod += (0.5)*(((ecoUpgradeNum-1)/2)+1);
+        ecoHappinessMod += (0.5)*(ecoUpgradeNum/2);
       }
       if(ecoUpgradeNum == 6){
         ecoB.text2 = ecoUpgrades[6];
