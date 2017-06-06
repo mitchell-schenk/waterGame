@@ -71,15 +71,17 @@ function calcValues(farmW, cityW, ecoW){
     myMoney.number += (farmW*farmMoney)+(cityW*cityMoney)+(ecoW*ecoMoney);
     round.number += 1;
     var num = Math.floor((Math.random()*14)+averageWater);
+    var num1 = Math.floor(Math.random()*20);
+    var num2 = Math.floor(Math.random()*10);
     if(round.number > 3){
       if(round.number%10 === 0){
         alert("The climate is changing! Average yearly water has dropped 2!");
         averageWater -= 2;
-      }else if((Math.floor(Math.random()*20)) === 1 && (!severeDrought)){
+      }else if(num1 === 1 && (!severeDrought)){
         alert("Severe drought! Your water is 15 less than normal");
         num -= 15;
         severeDrought = true;
-      }else if((Math.floor(Math.random()*10)) === 1 && (!drought)){
+      }else if(num2 === 1 && (!drought)){
         alert("Drought! Your water is 10 less than normal");
         num -= 10;
         drought = true;
@@ -96,7 +98,7 @@ function upgradeFarm(){
       myMoney.number = myMoney.number - cost;
       farmUpgradeNum++;
       if((farmUpgradeNum-1)%2 === 0){
-        farmMoney += (0.5*(farmUpgradeNum/2));
+        farmMoney += (0.5*((3*farmUpgradeNum)/4));
       }
       else{
         farmHappinessMod += (0.5)*(farmUpgradeNum/2);
@@ -301,7 +303,7 @@ function updateGameArea() {
     else if(gameState === 3){
       myGameArea.clear();
       myGameArea.context.font = "50px Arial";
-      myGameArea.context.fillText("You lose", 500, 280);
+      myGameArea.context.fillText("You lost", 500, 280);
     }
 }
 function checkButtons(x, y){
